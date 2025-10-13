@@ -1,6 +1,7 @@
 <?php
-header("Content-Type: application/json; charset=utf-8");
+
 session_start();
+header("Content-Type: application/json; charset=utf-8");
 
 try{
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -33,7 +34,8 @@ try{
     $consulta->execute([':email' => $email]);
     $asociado = $consulta->fetch();
 
-if (!$asociado || !password_verify($contrasena, $asociado['contraseña'])){        http_response_code(401);
+    if (!$asociado || !password_verify($contrasena, $asociado['contraseña']) || empty($asociado['contrasena'])){
+        http_response_code(401);
         throw new Exception("Email o contraseña incorrectos");
     }
     

@@ -36,7 +36,7 @@ public function guardar(){
     $sql = "INSERT INTO asociados (documento, nombres, apellidos, fechaNacimiento, direccionResidencia, genero, ciudad, telefono, email, contraseña) 
     VALUES (:documento, :nombres, :apellidos, :fechaNacimiento, :direccionResidencia, :genero, :ciudad, :telefono, :email, :contrasena)";
     $consulta = $this->conexion->prepare($sql);
-    $consulta->execute([
+    return $consulta->execute([
         ':documento' => $this->documento,
         ':nombres' => $this->nombres,
         ':apellidos' => $this->apellidos,
