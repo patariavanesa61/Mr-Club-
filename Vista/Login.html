@@ -1,26 +1,34 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>CLUB ADSO</title>
-        <link rel="stylesheet" href="../assets/CSS/estilos.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>CLUB ADSO</title>
+         <link rel="stylesheet" href="../assets/CSS/EstiloLogin.css">
     </head>
-    <body> 
-<div class="contenedorFormulario">
-    <h2>Iniciar Sesión></h2>
-    <form id="Iniciar sesion" action="" method="POST">
-        <div class="">
-            <label>Ingresar Correo Electronico</label>
-            <input id="Correo Electronico" type ="text" requiredplaceholder="Ingrese su correo electrónico">
+
+    <body>
+        <div class="Container-Login">
+            <h2>Iniciar Sesión Accerías</h2>
+
+            <form id="FormuLogin" action="" method="POST">
+                <div class="grupo-input">
+                    <label for="Email">Correo Electrónico: </label>
+                    <input type="email" id="Email" required placeholder="Ingresa Tu Correo Electrónico">
+                </div>
+
+                <div class="grupo-input">
+                    <label for="Password">Contraseña: </label>
+                    <input type="password" id="Password" required placeholder="Ingresa Tu Contraseña">
+                </div>
+                <div class="grupo-botones">
+                    <button type="submit">Ingresar</button>
+                    <button type="reset" class="btn-secundario">cancelar</button>
+                </div>
+
+                <p class="texto-link">
+                    ¿No tienes una cuenta? <a href="Registro.html">Regístrate aquí</a>
+                </p>
+            </form>
         </div>
-        <div class="">
-            <label>Ingresar Contraseña</label>
-            <input id="Contraseña" type ="password" required placeholder="Ingresar su contraseña">
-        </div>
-        <div class="">
-            <button type ="submit" id="Iniciar Sesion">Iniciar Sesion</button>
-            
-        </div>
-    </form>
-    </div>
+    </body>
 </html>
-  
