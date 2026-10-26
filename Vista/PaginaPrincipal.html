@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>CLUB ACERIAS - Panel Principal</title>
+<style>
+    .icono-principal {
+        font-size: 45px;
+        color: #e20c0cea;
+    } 
+</style>
+</head>
+<body class="bg-light"> <!--Esta clase es el fondo de la pagina-->
+    <div class="header-mr d-flex justify-content-between align-items-center"> <!--Esta clase es el encabezado de la pagina-->
+        <h3>CLUB ACERIAS - Panel Principal</h3>
+        <div class="text-end">
+            <small> Pepito Perez</small>
+            <button class="btn btn-danger btn-sm mt-1"><i class="bi bi-box-arrow-right"></i>Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <div class="container" py-4>
+        <h5 class="mb-4 fw-bold">Modulo del club asociados</h5> <!--Bold significa que va en negrilla y mb-4 es el margen inferior y el 4 el tamaño-->
+        <div id="TarjetasAdministrador" class="row g-4"></div> <!--Row es filas y col es columnas-->
+        <div class="col-md-3">
+            <div class="card modulo-card shadow-sm p-3">
+                <i class="bi bi-people icono-principal"></i>
+                <h4 class="text-primary">Asociados</h4>
+                <strong>Gestión de Asociados</strong> <!--Strong importancia al texto-->
+                <p class="small text-muted mt-2">
+                    Administración de información de asociados, incluyendo registro, actualización y seguimineto de
+                    datos personales y de menbresía.
+                </p>
+            </div>
+        </div>
+         <div class="col-md-3">
+            <div class="card modulo-card shadow-sm p-3">
+                <i class="bi bi-people icono-principal"></i>
+                <h4 class="text-primary">Prestamos</h4>
+                <strong>Gestión de Prestamos</strong> 
+                <p class="small text-muted mt-2">
+                    Formulario para registrar y administrar los prestamos otorotgados a los asociados, incluyendo detalles de los prestamos, plazos y sesguimiento de pagos.
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
