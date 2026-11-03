@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Préstamos - CLUB ACERIAS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/CSS/EstilosTarjetas.css">
+</head>
+<body>
+
+    <header class="header-bar">
+        <h1>CLUB ACERIAS - Gestión de Préstamos</h1>
+        <div class="header-user">
+            <span>Admin MR</span>
+            <a href="PaginaPrincipal.html" class="btn-cerrar-sesion">
+                <i class="fa-solid fa-right-from-bracket"></i> Volver al Panel
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Solicitar Préstamo -->
+        <div class="card-panel">
+            <h2><i class="fa-solid fa-hand-holding-dollar"></i> Registrar Préstamo</h2>
+            <form id="formPrestamo" class="form-grid" style="margin-top: 15px;">
+                <div class="form-group">
+                    <label>Asociado</label>
+                    <select required>
+                        <option value="">Seleccione un asociado...</option>
+                        <option>1049888777 - Carlos Mendoza</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Monto Solicitado ($)</label>
+                    <input type="number" placeholder="Ej. 500000" required>
+                </div>
+                <div class="form-group">
+                    <label>Plazo (Meses)</label>
+                    <input type="number" min="1" max="48" placeholder="Ej. 12" required>
+                </div>
+                <div class="form-group">
+                    <label>Tasa de Interés (%)</label>
+                    <input type="number" step="0.1" value="1.5" required>
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <button type="submit" class="btn-primary" style="width: max-content;">Aprobar Préstamo</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Historial / Seguimiento de Pagos -->
+        <div class="card-panel">
+            <h2><i class="fa-solid fa-file-invoice-dollar"></i> Seguimiento de Préstamos</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Asociado</th>
+                        <th>Monto Original</th>
+                        <th>Saldo Pendiente</th>
+                        <th>Cuotas</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PRES-001</td>
+                        <td>Carlos Mendoza</td>
+                        <td>$ 1.000.000</td>
+                        <td>$ 450.000</td>
+                        <td>6 / 12</td>
+                        <td><span class="badge badge-warning">En Pago</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+ <script src="../Controlador/Prestamos.js"></script>
+</html>

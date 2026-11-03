@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Actividades - CLUB ACERIAS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/CSS/EstilosTarjetas.css">
+</head>
+<body>
+
+    <header class="header-bar">
+        <h1>CLUB ACERIAS - Registro de Actividades</h1>
+        <div class="header-user">
+            <span>Admin MR</span>
+            <a href="PaginaPrincipal.html" class="btn-cerrar-sesion">
+                <i class="fa-solid fa-right-from-bracket"></i> Volver al Panel
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Crear Actividad/Evento -->
+        <div class="card-panel">
+            <h2><i class="fa-solid fa-calendar-plus"></i> Crear Nueva Actividad / Evento</h2>
+            <form id="formActividad" class="form-grid" style="margin-top: 15px;">
+                <div class="form-group">
+                    <label>Nombre del Evento</label>
+                    <input type="text" placeholder="Ej. Asamblea General" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de Evento</label>
+                    <select>
+                        <option>Reunión</option>
+                        <option>Evento Deportivo</option>
+                        <option>Programa Social</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fecha y Hora</label>
+                    <input type="datetime-local" required>
+                </div>
+                <div class="form-group">
+                    <label>Lugar</label>
+                    <input type="text" placeholder="Ej. Salón Principal">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <button type="submit" class="btn-primary" style="width: max-content;">Registrar Evento</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Participación de Asociados -->
+        <div class="card-panel">
+            <h2><i class="fa-solid fa-clipboard-user"></i> Control de Participación</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Evento</th>
+                        <th>Tipo</th>
+                        <th>Fecha</th>
+                        <th>Asistentes Registrados</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Torneo de Integración</td>
+                        <td>Evento Deportivo</td>
+                        <td>15/11/2026</td>
+                        <td>42 asociados</td>
+                        <td><button class="btn-primary" style="padding: 4px 8px; font-size: 0.8rem;">Tomar Asistencia</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+<script src="../Controlador/Actividades.js"></script>
+</html>

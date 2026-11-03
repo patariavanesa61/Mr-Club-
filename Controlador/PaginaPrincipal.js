@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const Logueado = localStorage.getItem('Logueado');
-    if (Logueado !== 'True') {
+    if (Logueado !== 'true') {
         window.location.href = 'Login.html'
         return;
     }
@@ -12,15 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (Rol === 'admin') {
         document.getElementById('TarjetasAdministrador').classList.remove('d-none');
-        document.getElementById('TarjetasAsociados').classList.add('d-done');
+        document.getElementById('TarjetasAsociados').classList.add('d-none');
     }
     else{
         document.getElementById('TarjetasAdministrador').classList.add('d-none');
-        document.getElementById('TarjetasAsociados').classList.remove('d-done');
+        document.getElementById('TarjetasAsociados').classList.remove('d-none');
     }
 });
 
-function CerrarSesion(){
-    localStorage.clear;
-    window.location.href = '../Vista/login.htlm';
+function CerrarSesión(){
+    localStorage.clear();
+    window.location.href = 'Login.html';
 }

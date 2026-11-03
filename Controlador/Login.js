@@ -20,8 +20,6 @@ document.getElementById('FormuLogin').addEventListener('submit', function (e) {
         localStorage.setItem('Rol', usuarioEncontrado.Rol);
         localStorage.setItem('Nombre', usuarioEncontrado.Nombre);
         window.location.href = "PaginaPrincipal.html";
-    alert(claveInput)
-
     }
     else{
         alert('Usuario o contraseña incorrecta')
