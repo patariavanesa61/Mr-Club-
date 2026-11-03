@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
         formActividad.addEventListener("submit", (e) => {
             e.preventDefault();
             
-            // Capturar datos del formulario de actividades
             const inputs = formActividad.querySelectorAll("input, select, textarea");
             const nombreActividad = inputs[0] ? inputs[0].value : "Actividad";
 

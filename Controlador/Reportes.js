@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
         filtroReporte.addEventListener("change", (e) => {
             const opcionSeleccionada = e.target.value;
             console.log(`Filtrando reportes por: ${opcionSeleccionada}`);
-            // Aquí puedes agregar la lógica para actualizar la tabla de reportes según el filtro
         });
     }
 
