@@ -9,6 +9,13 @@ const formAsociado = document.getElementById("formAsociado");
         /*Lee los datos del formulario y los convierte en un objeto*/
         const asociado = Object.fromEntries(new FormData(formAsociado).entries());
 
+        if(asociado.contraseña !== asociado.confirmarContraseña){
+            document.getElementById("MensajeRegistro").textContent = "Las contraseñas no coinciden";
+            document.getElementById("MensajeRegistro").dataset.tipo="error";
+            return;
+        }
+        delete asociado.confirmarContraseña; /*Elimina la propiedad confirmarContraseña del objeto asociado*/
+
         botonGuardar.disabled = true; /*Desactiva el boton guardar para evitar que se envie varias veces el formulario*/
          
         try{

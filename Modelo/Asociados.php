@@ -1,7 +1,7 @@
 <?php
-require_once__DIR__ . '/Config/conexion.php';
+require_once __DIR__ . '/../Config/conexion.php';
 
-class Asociados{
+class sociados{
     private $Documento;
     private $Nombres;
     private $Apellidos;
@@ -9,28 +9,30 @@ class Asociados{
     private $DireccionResidencia;
     private $Ciudad;
     private $Telefono;
-    private $email;
-    private $genero;
+    private $Email;
+    private $Contraseña;
+    private $Genero;
 
     private $conexion;
 
 public function __construct($datos){
-   $this->Documento = $datos['documento'];
-   $this->Nombres = $datos['nombres'];
-   $this->Apellidos = $datos['apellidos'];
-   $this->FechaNacimiento = $datos['fechaNacimiento'];
-   $this->DireccionResidencia = $datos['direccionResidencia']; 
-   $this->Ciudad = $datos['ciudad'];
-   $this->Telefono = $datos['telefono'];
-   $this->email = $datos['email'];
-   $this->genero = $datos['genero'];
+   $this->Documento = $datos['Documento'];
+   $this->Nombres = $datos['Nombres'];
+   $this->Apellidos = $datos['Apellidos'];
+   $this->FechaNacimiento = $datos['FechaNacimiento'];
+   $this->DireccionResidencia = $datos['DireccionResidencia']; 
+   $this->Ciudad = $datos['Ciudad'];
+   $this->Telefono = $datos['Telefono'];
+   $this->Contraseña = password_hash($datos['Contraseña'], PASSWORD_DEFAULT); /*Encripta la contraseña antes de guardarla en la base de datos*/
+   $this->Email = $datos['Email'];
+   $this->Genero = $datos['Genero'];
 
-   $this->conexiondb = new Conexion();
-   $this->conexion = $conexiondb->conectar();
+   $conexionDB = new Conexion();
+   $this->conexion = $conexionDB->conectar();
    
 }
 public function guardar(){
-    $sql = "INSERT INTO Asociados (documento, nombres, apellidos, fechaNacimiento, direccionResidencia, ciudad, telefono, email, genero) VALUES (:documento, :nombres, :apellidos, :fechaNacimiento, :direccionResidencia, :ciudad, :telefono, :email, :genero)";
+    $sql = "INSERT INTO Asociados (documento, nombres, apellidos, fechaNacimiento, direccionResidencia, ciudad, telefono, email, Contraseña, genero) VALUES (:documento, :nombres, :apellidos, :fechaNacimiento, :direccionResidencia, :ciudad, :telefono, :email, :contraseña, :genero)";
     $consulta = $this->conexion->prepare($sql);
     $consulta->execute([
         ':documento' => $this->Documento,
@@ -40,8 +42,9 @@ public function guardar(){
         ':direccionResidencia' => $this->DireccionResidencia,
         ':ciudad' => $this->Ciudad,
         ':telefono' => $this->Telefono,
-        ':email' => $this->email,
-        ':genero' => $this->genero
+        ':email' => $this->Email,
+        ':Contraseña' => $this->Contraseña,
+        ':genero' => $this->Genero
     ]);
 }
 }

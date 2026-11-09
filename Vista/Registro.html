@@ -9,10 +9,10 @@
      <div class="Contenedor-Formulario">
         <h2>Registro de Asociado - Acerias</h2>
 
-        <form id="Formulario Registro" action="../Modelo/GuardarAsociado.php" method="POST">
+        <form id="formAsociado" action="../Modelo/GuardarAsociado.php" method="POST">
             <div class="grupo-input">
                 <label>Ingresar Documento: </label>
-                <input id="Documento" name="documento" type="number" placeholder="ejemplo:1054869578">
+                <input id="Documento" name="Documento" type="number" placeholder="ejemplo:1054869578">
             </div>
             <div class="grupo-input">
                 <label>Ingresar Nombres: </label>
@@ -47,17 +47,25 @@
                 <input type="text" id="Email" name="Email" required placeholder="ejemplo: valeria@gmail.com">
             </div>
             <div class="grupo-input">
+                <label> Contraseña: </label>
+                <input type="text" id="Contraseña" name="Contraseña" required placeholder="Minimo 8 caracteres, una mayuscula, un numero y un caracter especial">
+            </div>
+             <div class="grupo-input">
+                <label> ConfirmarContraseña: </label>
+                <input type="text" id="ConfirmarContraseña" name="ConfirmarContraseña" required placeholder="Escribe de nuevo tu contraseña">
+            </div>
+            <div class="grupo-input">
                 <label>Genero: </label>
                 <label>
-                      <input type="radio" id="Femenino" name="genero" value="Femenino">
+                      <input type="radio" id="Femenino" name="Genero" value="Femenino">
                       <span>FEMENINO</span>
                 </label>
                 <label>
-                      <input type="radio" id="Masculino" name="genero" value="Masculino">
+                      <input type="radio" id="Masculino" name="Genero" value="Masculino">
                       <span>MASCULINO</span>
                 </label>
                 <label>
-                      <input type="radio" id="Otro" name="genero" value="Otro">
+                      <input type="radio" id="Otro" name="Genero" value="Otro">
                       <span>OTRO</span>
                 </label>
             </div>
@@ -70,4 +78,5 @@
         </form>
      </div>
     </body>
+    <script src="../Controlador/Asociados.js"></script>
 </html>

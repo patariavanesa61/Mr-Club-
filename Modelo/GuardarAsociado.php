@@ -1,6 +1,6 @@
 <?php
-header("Content-Type: application/json; charset-utf-8");
-require __DIR__ . '../Modelo/Asociados.php';
+header("Content-Type: application/json; charset=utf-8");
+require __DIR__ . '/Asociados.php';
 
 try {
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -22,7 +22,7 @@ try {
     }
 
     /*Crear una intancia de la clase Asociados y guardar los datos en la base de datos*/
-    $campos=['documento','Nombres','Apellidos','FechaNacimiento','DirecciónDeResidencia','Ciudad','Telefono','Email','genero']
+    $campos=['Documento','Nombres','Apellidos','FechaNacimiento','DireccionResidencia','Ciudad','Telefono','Email', 'Contraseña','Genero'];
     
     foreach($campos as $campo) {
         if (!isset($datos[$campo])) {
@@ -35,14 +35,12 @@ try {
         throw new Exception("Formato de email inválido");
     }
 
-    $asociado = new Asociados($datos);
+    $asociado = new Asociados($datos);  
     $resultado =$asociado->guardar();
     
     if ($resultado) {
         http_response_code(201);
         echo json_encode(["success" => true, "mensaje" => "Asociado guardado correctamnente"]);
-
-
         
     }else{
         http_response_code(500);
