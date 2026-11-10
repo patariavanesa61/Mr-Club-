@@ -22,7 +22,7 @@ try {
     }
 
     /*Crear una intancia de la clase Asociados y guardar los datos en la base de datos*/
-    $campos=['Documento','Nombres','Apellidos','FechaNacimiento','DireccionResidencia','Ciudad','Telefono','Email', 'Contraseña','Genero'];
+    $campos=['Documento','Nombres','Apellidos','FechaNacimiento','DirecciónDeResidencia','Ciudad','Telefono','Email', 'Contraseña','Genero'];
     
     foreach($campos as $campo) {
         if (!isset($datos[$campo])) {
@@ -46,9 +46,9 @@ try {
         http_response_code(500);
         echo json_encode(["success" => false, "mensaje" => "Error al guardar el asociado"]);
     }
-}catch (PDDException){
-    if($e->getcode(500) === 23000){  /*Codigo de error para datos duplicaddos en MySQL*/
-        http_response_code(400);
+}catch (PDOException $e){
+    if($e->getcode() === 23000){  /*Codigo de error para datos duplicaddos en MySQL*/
+        http_response_code(409);
         echo json_encode(["success" => false, "mensaje" => "El documento ya esta registrado"]);
     }
     

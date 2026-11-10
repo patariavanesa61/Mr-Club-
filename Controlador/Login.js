@@ -1,27 +1,38 @@
-const Usuarios = [
-    {Usuario: 'admin@gmail.com', clave: '123', Rol: 'admin' , Nombre: 'Admin  MR'},
-    {Usuario: 'pepito@gmail.com', clave: '123', Rol: 'asociados' , Nombre : 'Juan Perez'}
-];
-
-document.getElementById('FormuLogin').addEventListener('submit', function (e) {
+const formulario = document.getElementById('FormuLogin');
+formulario.addEventListener('submit', async function (e) {
     e.preventDefault();
     
+    const botton = formulario.querySelector('button[type="submit"]');
+    const mensaje = formulario.getElementById("mensajelogin");
 
+    botton.disabled = true;
+    try{
+        const respuesta = await fetch(formulario.action, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(Object.fromEntries(new FormData(formulario).entries()),
+        )
+        });
 
-    const UsuarioInput = document.getElementById('Email').value;
-    const claveInput  = document.getElementById('Password').value;
-    
-    const usuarioEncontrado = Usuarios.find(
-        u => u.Usuario === UsuarioInput && u.clave === claveInput
-    );
+        const resultado = await respuesta.json();
 
-    if(usuarioEncontrado){
-        localStorage.setItem('Logueado', 'true');
-        localStorage.setItem('Rol', usuarioEncontrado.Rol);
-        localStorage.setItem('Nombre', usuarioEncontrado.Nombre);
+        if(!resultado.success){ /*!Signo para negar*/
+            mensaje.textContent = "No fue posible iniciar sesión. Por favor, verifica tus credenciales";
+            botton.disable = false;
+            return;
+        }
+        localStorage.setItem("Logueado", "true");
+        localStorage.setItem("Rol", resultado.Rol);
+        localStorage.setItem("Nombre", resultado.Nombre);
         window.location.href = "PaginaPrincipal.html";
+
+    }catch (error){
+        console.error("Error al iniciar sesión", error);
+        mensaje.textContent = "Ocurrio un error al intentar iniciar sesión. Por favor, inténtalo de nuevo más tarde.";
+    } finally{
+        botton.disable = false;
     }
-    else{
-        alert('Usuario o contraseña incorrecta')
-    }
+
+
+    
 });
