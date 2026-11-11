@@ -3,7 +3,7 @@ formulario.addEventListener('submit', async function (e) {
     e.preventDefault();
     
     const botton = formulario.querySelector('button[type="submit"]');
-    const mensaje = formulario.getElementById("mensajelogin");
+    const mensaje = document.getElementById("mensajelogin");
 
     botton.disabled = true;
     try{

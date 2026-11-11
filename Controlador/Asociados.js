@@ -1,40 +1,41 @@
-const formulario = document.getElementById('FormuRegistro');
+const formAsociado = document.getElementById("Contenedor-Formulario");
 
-formulario.addEventListener('submit', async function (event) {
-    event.preventDefault();
+    formAsociado.addEventListener("submit", async function (event) {
+        //Evitar que se envie el formulario por defecto//
+        event.preventDefault();
 
-    const botonGuardar = formulario.querySelector('button[type="submit"]');
-    // Lee los campos del formulario y los convierte en un objeto.
-    const asociado = Object.fromEntries(new FormData(formulario).entries());
-    alert(JSON.stringify(asociado)); // Muestra los datos del formulario en un alert para depuración
+        const botonGuardar = formAsociado.querySelector("button[type='submit']"); //Algo para que el usuario vea la vista//
+        
+        /*Lee los datos del formulario y los convierte en un objeto*/
+        const asociado = Object.fromEntries(new FormData(formAsociado).entries());
 
-    if(asociado.contraseña !== asociado.confirmarContraseña) {
-        document.getElementById('mensajeRegistro').textContent = "Las contraseñas no coinciden.";
-    }
-    
-    delete asociado.confirmarContraseña; // Elimina el campo de confirmación de contraseña antes de enviarlo al servidor
-
-    botonGuardar.disabled = true;// Deshabilitar el botón mientras se procesa la solicitud
-
-    try {
-        const respuesta = await fetch(formulario.action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(asociado) });
-
-        // Pasar la respuesta a JSON a un objeto de JavaScript
-        const resultado = await respuesta.json();
-        document.getElementById('mensajeRegistro').textContent = "Guardando...";
-
-        document.getElementById('mensajeRegistro').dataset.tipo = '';
-
-        document.getElementById('mensajeRegistro').textContent = resultado.mensaje;
-
-        if (respuesta.ok && resultado.success) {
-            formulario.reset();  //  Limpiar el formulario si la solicitud fue exitosa
+        if(asociado.contraseña !== asociado.ConfirmarContraseña){
+            document.getElementById("MensajeRegistro").textContent = "Las contraseñas no coinciden";
+            document.getElementById("MensajeRegistro").dataset.tipo="error";
+            return;
         }
-    } catch (error) {
-        console.error('Error al enviar el formulario:', error);
-        document.getElementById("mensajeRegistro").textContent =
-            "Ocurrió un error al enviar el formulario. Por favor, inténtelo de nuevo más tarde.";
-    } finally {
-        botonGuardar.disabled = false; // Habilitar el botón después de procesar la solicitud.
-    }
-});
+        delete asociado.ConfirmarContraseña; /*Elimina la propiedad confirmarContraseña del objeto asociado*/
+
+        botonGuardar.disabled = true; /*Desactiva el boton guardar para evitar que se envie varias veces el formulario*/
+         
+        try{
+            const respuesta = await fetch(formAsociado.action,{method:'POST',headers:{'Content-Type': 'application/json'},body:JSON.stringify(asociado)});
+            /*Pasar la respuesta json a un objeto de JavaScript*/
+            const resultado = await respuesta.json();
+            
+            document.getElementById("MensajeRegistro").textContent = "Guardardo correctamente";
+            document.getElementById("MensajeRegistro").dataset.tipo="";
+            document.getElementById("MensajeRegistro").textContent = resultado.mensaje;
+
+
+            if(respuesta.ok && resultado.success){
+                fomularioAsociado.reset(); /*Limpia el formulario*/
+            }
+        
+        }catch(error){
+            //console.error("Error al enviar el formulario:".error);
+            document.getElementById("MensajeRegistro").textContent = "Error al enviar el formulario";
+        }finally {
+            botonGuardar.disabled = false; /*Reactiva el boton guardar*/
+        }
+     });

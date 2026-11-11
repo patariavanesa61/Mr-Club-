@@ -1,50 +1,52 @@
 <?php
 require_once __DIR__ . '/../Config/conexion.php';
 
-class sociados{
-    private $Documento;
-    private $Nombres;
-    private $Apellidos;
-    private $FechaNacimiento;
-    private $DireccionResidencia;
-    private $Ciudad;
-    private $Telefono;
-    private $Email;
-    private $Contraseña;
-    private $Genero;
+class asociados{
+    private $documento;
+    private $nombres;
+    private $apellidos;
+    private $fechaNacimiento;
+    private $direccionResidencia;
+    private $genero;
+    private $ciudad;
+    private $telefono;
+    private $email;
+    private $contraseña;
 
     private $conexion;
 
 public function __construct($datos){
-   $this->Documento = $datos['Documento'];
-   $this->Nombres = $datos['Nombres'];
-   $this->Apellidos = $datos['Apellidos'];
-   $this->FechaNacimiento = $datos['FechaNacimiento'];
-   $this->DireccionResidencia = $datos['DireccionResidencia']; 
-   $this->Ciudad = $datos['Ciudad'];
-   $this->Telefono = $datos['Telefono'];
-   $this->contraseña = password_hash($datos['contraseña'], PASSWORD_DEFAULT); /*Encripta la contraseña antes de guardarla en la base de datos*/
-   $this->Email = $datos['Email'];
-   $this->Genero = $datos['Genero'];
+   $this->documento = $datos['Documento'];
+   $this->nombres = $datos['Nombres'];
+   $this->apellidos = $datos['Apellidos'];
+   $this->fechaNacimiento = $datos['FechaNacimiento'];
+   $this->direccionResidencia = $datos['DirecciónDeResidencia']; 
+    $this->genero = $datos['Genero'];
+   $this->ciudad = $datos['Ciudad'];
+   $this->telefono = $datos['Telefono'];
+   $this->contraseña = password_hash($datos['Contraseña'], PASSWORD_DEFAULT); /*Encripta la contraseña antes de guardarla en la base de datos*/
+   $this->email = $datos['Email'];
+ 
 
    $conexionDB = new Conexion();
    $this->conexion = $conexionDB->conectar();
    
 }
 public function guardar(){
-    $sql = "INSERT INTO Asociados (documento, nombres, apellidos, fechaNacimiento, direccionResidencia, ciudad, telefono, email, contraseña, genero) VALUES (:documento, :nombres, :apellidos, :fechaNacimiento, :direccionResidencia, :ciudad, :telefono, :email, :contraseña, :genero)";
+    $sql = "INSERT INTO asociados (documento, nombres, apellidos, fechaNacimiento, direccionResidencia, genero, ciudad, telefono, email, contraseña) 
+    VALUES (:documento, :nombres, :ape0llidos, :fechaNacimiento, :direccionResidencia, :genero :ciudad, :telefono, :email, :contraseña)";
     $consulta = $this->conexion->prepare($sql);
     $consulta->execute([
-        ':documento' => $this->Documento,
-        ':nombres' => $this->Nombres,
-        ':apellidos' => $this->Apellidos,
-        ':fechaNacimiento' => $this->FechaNacimiento,
-        ':direccionResidencia' => $this->DireccionResidencia,
-        ':ciudad' => $this->Ciudad,
-        ':telefono' => $this->Telefono,
-        ':email' => $this->Email,
-        ':Contraseña' => $this->Contraseña,
-        ':genero' => $this->Genero
+        ':documento' => $this->documento,
+        ':nombres' => $this->nombres,
+        ':apellidos' => $this->apellidos,
+        ':fechaNacimiento' => $this->fechaNacimiento,
+        ':direccionResidencia' => $this->direccionResidencia,
+        ':genero' => $this->genero,
+        ':ciudad' => $this->ciudad,
+        ':telefono' => $this->telefono,
+        ':email' => $this->email,
+        ':contraseña' => $this->contraseña
     ]);
 }
 }
