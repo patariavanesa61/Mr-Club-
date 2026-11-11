@@ -21,8 +21,8 @@ formulario.addEventListener('submit', async function (e) {
             return;
         }
         localStorage.setItem("Logueado", "true");
-        localStorage.setItem("Rol", resultado.Rol);
-        localStorage.setItem("Nombre", resultado.Nombre);
+        localStorage.setItem("Rol", resultado.rol);
+        localStorage.setItem("Nombre", resultado.nombre);
         window.location.href = "PaginaPrincipal.html";
 
     }catch (error){
