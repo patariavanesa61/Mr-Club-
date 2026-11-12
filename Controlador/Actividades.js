@@ -1,7 +1,7 @@
 const listaActividades = document.getElementById("listaActividades");
 let Administrador = false;
 let Actividades = [];
-let configurarAcciones = false;
+let accionesConfiguradas = false;
 const formularioActividad=document.getElementById("formActividad")
 const modalActividad=new bootstrap.Modal(document.getElementById(modalActividad),
 );
@@ -10,7 +10,7 @@ async function solicitarApi(metodo, datos) {
     const opciones = {
         method: metodo,
         headers: { 'Content-Type': 'application/json' },
-    }
+    };
     if (datos) {
         opciones.body = JSON.stringify(datos);
 
@@ -31,7 +31,7 @@ async function cargarActividad() {
         const resultado = await solicitarApi("GET");
         Administrador = resultado.rol === "admin";
 
-        configurarAccionnes();
+        configurarAcciones();
         Actividades = resultado.Actividades;
         mostrarActividades();
 
@@ -55,32 +55,32 @@ function mostrarActividades() {
         return;
 
     }
-    Actividades.forEach((Actividades) => {
+    Actividades.forEach((actividad) => {
         const fila = document("tr");
         fila.append(
-            crearCelda(Actividades.nombreActividad),
-            crearCelda(Actividades.fechaEvento),
-            crearCelda(Actividades.munucipio),
-            crearCelda(Actividades.totalRecaudado === null ? "Pendiente" : Number(Actividades.totalRecaudado).toLocaleString("es-CO", { style: "currency", currency: "COP" })), //Convertir en pesos colombianos aparece con un signo de pesos
+            crearCelda(actividad.nombreActividad),
+            crearCelda(actividad.fechaEvento),
+            crearCelda(actividad.munucipio),
+            crearCelda(actividad.totalRecaudado === null ? "Pendiente" : Number(Actividades.totalRecaudado).toLocaleString("es-CO", { style: "currency", currency: "COP" })), //Convertir en pesos colombianos aparece con un signo de pesos
         );
         if (Administrador) {
-            const Acciones = document.createElement("td");
-            Acciones.className = "text-nowrap";
+            const acciones = document.createElement("td");
+            acciones.className = "text-nowrap";
 
             const botonEditar = document.createElement("button");
             botonEditar.type = "button";
             botonEditar.className = " btn btn-sm btn-outline-primary me-2";
             botonEditar.innerHTML = '<i class= "bi bi-pencil-square"></i>';
-            botonEditar.addEventListener("click", () => abrrirEdicion(Actividades));
+            botonEditar.addEventListener("click", () => abrirEdicion(actividad));
 
             const botonEliminar = document.createElement("button");
             botonEliminar.type = "button";
             botonEliminar.className = " btn btn-sm btn-outline-primary me-2";
             botonEliminar.innerHTML = '<i class="bi bi-trash"></i>';
-            botonEliminar.addEventListener("click", () => eliminarActividad(Actividades));
+            botonEliminar.addEventListener("click", () => eliminarActividad(actividad));
 
-            Acciones.append(botonEditar, botonEliminar); //Apent que agregue en esa fila la celda de esos dos botones
-            fila.append(Acciones); //Que en la fila agrege los botones
+            acciones.append(botonEditar, botonEliminar); //Apent que agregue en esa fila la celda de esos dos botones
+            fila.append(acciones); //Que en la fila agrege los botones
         }
         listaActividades.append(fila);
 
@@ -93,13 +93,13 @@ function crearCelda(texto) {
     return celda;
 }
 
-async function eliminarActividad(Actvividad){
+async function eliminarActividad(actvividad){
     const confirmar = window.confirm(`¿Deseas elminar la atividad? "$(Actvividad.nombreActividad)"?`,);
     if (!confirmar) {
         return
     }
     try{
-        await solicitarApi("DELETE",{idActividad:Actvividad.idActividad});
+        await solicitarApi("DELETE",{idActividad:actvividad.idActividad});
         await cargarActividad();
         alert("Actividad eliminada correctamente");
 
@@ -110,7 +110,7 @@ async function eliminarActividad(Actvividad){
     
 }
 function configurarAcciones(){
-    if (AccionesConfiguradas) {
+    if (accionesConfiguradas) {
         return;
     }
     const botonNueva =document.getElementById("nuevaActividad");
@@ -118,7 +118,7 @@ function configurarAcciones(){
     if (Administrador) {
         botonNueva.classList.remove("d-none");
         encabezadoAcciones.classList.remove("d-none");
-        AccionesConfiguradas=true;
+        accionesConfiguradas=true;
         return;
     }
 

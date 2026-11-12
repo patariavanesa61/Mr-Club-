@@ -22,7 +22,7 @@ formulario.addEventListener('submit', async function(event) {
     botonGuardar.disabled = true;// Deshabilitar el botón mientras se procesa la solicitud
 
     try{
-        // CAMBIO 1: "Guardando..." ahora se muestra antes del fetch para que se alcance a ver
+     
         document.getElementById('MensajeRegistro').textContent = "Guardando...";
         document.getElementById('MensajeRegistro').dataset.tipo = '';
 
