@@ -9,7 +9,7 @@ try {
     }
 
     /*Leer el contenido JSON del cuerpo de la solicitud*/
-    $json = file_get_contents('php://input');
+    $json = file_get_contents('php://input', true);
 
     /*Decodificar el JSON en un arreglo asociativo*/
     $datos = json_decode($json, true);
@@ -22,7 +22,7 @@ try {
 
 
     /*Crear una instancia de la clase Asociados y guardar los datos en la base de datos*/
-    $campos = ['Documento', 'Nombres', 'Apellidos', 'FechaNacimiento', 'DirecciónDeResidencia', 'Ciudad', 'Telefono', 'Email', 'Contraseña', 'ConfirmarContraseña', 'Genero'];
+    $campos = ['Documento', 'Nombres', 'Apellidos', 'FechaNacimiento', 'DirecciónDeResidencia', 'Ciudad', 'Telefono', 'Email', 'Contraseña','Genero'];
     
     foreach($campos as $campo) {
         if (!isset($datos[$campo]) || trim($datos[$campo]) === '') {

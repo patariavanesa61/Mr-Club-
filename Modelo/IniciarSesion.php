@@ -1,6 +1,6 @@
 <?php
-
-session_start("content-Type: text/html; charset=UTF-8");
+header("Content-Type: application/json; charset=utf-8");
+session_start();
 
 try{
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -18,10 +18,10 @@ try{
         throw new Exception("Datos inválidos");
     }
 
-    $email = $datos['Email'] ?? "";
-    $contraseña = $datos['Contraseña'] ?? "";
+    $email = $datos['email'] ?? "";
+    $contrasena = $datos['Contraseña'] ?? "";
 
-    if (!is_string($email) || !is_string($contraseña) || $email === "" || $contraseña === "") {
+    if (!is_string($email) || !is_string($contrasena) || $email === "" || $contrasena === "") {
         http_response_code(400);
         throw new Exception("Email y contraseña son invalidos");
     }
@@ -29,22 +29,21 @@ try{
     require __DIR__ . '/../Config/conexion.php';
     $conexion = (new Conexion())->conectar();
 
-    $consulta = $conexion->prepare("SELECT * FROM Asociados WHERE email = :email");
+    $consulta = $conexion->prepare("SELECT * FROM asociados WHERE email = :email");
     $consulta->execute([':email' => $email]);
     $asociado = $consulta->fetch();
 
-    if (!$asociado || !password_verify($contraseña, $asociado['contraseña_hash']) || empty($asociado['contraseña'])){
-        http_response_code(401);
+if (!$asociado || !password_verify($contrasena, $asociado['contraseña'])){        http_response_code(401);
         throw new Exception("Email o contraseña incorrectos");
     }
     
     $_SESSION['Rol'] = strtolower($asociado['Rol']); /*Almacenar el rol en minúsculas para evitar problemas de comparación*/
-    $_SESSION['documento'] = $asociado['Documento'];
+    $_SESSION['documento'] = $asociado['documento'];
 
     echo json_encode([
         "success" => true,
         "Rol" => $_SESSION['Rol'],
-        "Nombre" => $asociado["Nombres"] . "" . $asociado["apellidos"],
+        "Nombre" => $asociado["nombres"] . "" . $asociado["apellidos"],
     ]);    
 }
 catch(PDOException $e){
@@ -52,10 +51,10 @@ catch(PDOException $e){
     echo json_encode([
         "success" => false,
         "message" => $errorMessage
-    ])
+    ]);
 
 
 }
 catch(Exception $e){
-    echo json_encode(["success" => false, "mensaje" => $e->getMenssage()])
+    echo json_encode(["success" => false, "mensaje" => $e->getMessage()]);
 }
