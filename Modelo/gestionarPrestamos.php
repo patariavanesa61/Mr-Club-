@@ -4,7 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 header("Content-Type: application/json; charset=UTF-8");
 
+
 require_once __DIR__ . '/../Config/conexion.php';
+
 
 try {
     if (!isset($_SESSION["documento"], $_SESSION["rol"])) {

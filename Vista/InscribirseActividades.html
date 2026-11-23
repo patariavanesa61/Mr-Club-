@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscribirse a Actividades - CLUB ACERIAS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <style>
+      .navbar-custom {
+        background-color: #1c2841;
+      }
+      .icono-tarjeta {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+      }
+      .card-actividad {
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .card-actividad:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <header class="navbar-custom text-white py-3 px-4 mb-4">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <h1 class="h4 mb-0 fw-semibold">Inscripción a Actividades</h1>
+        <a href="PaginaPrincipal.html" class="btn btn-outline-light btn-sm px-3">
+          <i class="bi bi-arrow-left me-1"></i> Volver al panel
+        </a>
+      </div>
+    </header>
+
+    <main class="container pb-5" style="max-width: 1100px;">
+      <!-- Resumen rápido del asociado -->
+      <div class="row g-3 mb-4">
+        <div class="col-12 col-sm-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+              <div class="icono-tarjeta bg-primary-subtle text-primary">
+                <i class="bi bi-calendar-event"></i>
+              </div>
+              <div>
+                <div class="small text-muted text-uppercase fw-semibold">Actividades disponibles</div>
+                <div class="h5 mb-0" id="totalDisponibles">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+              <div class="icono-tarjeta bg-success-subtle text-success">
+                <i class="bi bi-check2-circle"></i>
+              </div>
+              <div>
+                <div class="small text-muted text-uppercase fw-semibold">Mis suscripciones</div>
+                <div class="h5 mb-0" id="totalInscritas">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="row g-2 align-items-center mb-4">
+        <div class="col-md-7">
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <input
+              type="search"
+              id="buscarActividad"
+              class="form-control"
+              placeholder="Buscar actividad o municipio..."
+            />
+          </div>
+        </div>
+        <div class="col-md-5">
+          <select id="filtroSuscripcion" class="form-select" aria-label="Filtrar actividades">
+            <option value="todas">Todas las actividades</option>
+            <option value="disponibles">Por inscribirme</option>
+            <option value="inscritas">Ya estoy inscrito</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Listado de actividades en tarjetas -->
+      <div class="row g-3" id="contenedorActividades"></div>
+    </main>
+
+    <!-- Modal de confirmación con miniencuesta -->
+    <div class="modal fade" id="modalConfirmar" tabindex="-1" aria-labelledby="tituloConfirmar" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5" id="tituloConfirmar">Confirmar suscripción</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <p id="textoConfirmar" class="mb-3"></p>
+
+            <!-- Miniencuesta (solo visible al suscribirse) -->
+            <div id="bloqueEncuesta" class="border-top pt-3">
+              <div class="small fw-semibold text-uppercase text-muted mb-2">Miniencuesta rápida</div>
+
+              <div class="mb-3">
+                <label for="encuestaTransporte" class="form-label small fw-medium">¿Cómo asistirás al evento?</label>
+                <select id="encuestaTransporte" class="form-select form-select-sm">
+                  <option value="Transporte propio">Transporte propio</option>
+                  <option value="Transporte del club">Necesito transporte del club</option>
+                  <option value="Con otro asociado">Voy con otro asociado</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="encuestaAcompanantes" class="form-label small fw-medium">¿Llevarás acompañantes?</label>
+                <select id="encuestaAcompanantes" class="form-select form-select-sm">
+                  <option value="0">No, voy solo(a)</option>
+                  <option value="1">1 acompañante</option>
+                  <option value="2">2 acompañantes</option>
+                  <option value="3+">3 o más acompañantes</option>
+                </select>
+              </div>
+
+              <div class="mb-0">
+                <label for="encuestaComentario" class="form-label small fw-medium">Observación o preferencia (opcional)</label>
+                <input
+                  type="text"
+                  id="encuestaComentario"
+                  class="form-control form-control-sm"
+                  maxlength="150"
+                  placeholder="Ej. Horario preferido, restricción alimentaria..."
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="btnConfirmarAccion">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Controlador/InscribirActividades.js?v=2"></script>
+  </body>
+</html>

@@ -8,9 +8,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
     <style>
       .navbar-custom { background-color: #1c2841; }
+      .resumen-icono {
+        width: 46px; height: 46px; border-radius: 12px;
+        display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+      }
+      .prestamo-card { border: 0; border-top: 4px solid #198754; }
+      .prestamo-card.liquidado { border-top-color: #6c757d; }
+      .dato-etiqueta { font-size: 0.72rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.04em; }
+      .dato-valor { font-weight: 600; }
+      .progress { height: 10px; }
     </style>
   </head>
-  <body class="bg-white">
+  <body class="bg-light">
     <header class="navbar-custom text-white py-3 px-4 mb-4">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <h1 class="h4 mb-0 fw-semibold">Mis pagos</h1>
@@ -20,41 +29,64 @@
       </div>
     </header>
 
-    <main class="container" style="max-width: 960px;">
-      <p class="text-muted">Consulta los abonos de tu préstamo.</p>
-
+    <main class="container pb-5" style="max-width: 1100px;">
       <div id="mensaje" class="d-none" role="alert"></div>
 
       <!-- Resumen -->
       <div class="row g-3 mb-4">
-        <div class="col-md-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <div class="small text-muted">Total prestado</div>
-              <div class="h4 mb-0" id="totalPrestado">-</div>
+        <div class="col-6 col-lg-3">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+              <div class="resumen-icono bg-primary-subtle text-primary"><i class="bi bi-bank"></i></div>
+              <div>
+                <div class="dato-etiqueta">Total prestado</div>
+                <div class="h5 mb-0" id="totalPrestado">-</div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <div class="small text-muted">Total abonado</div>
-              <div class="h4 mb-0 text-success" id="totalAbonado">-</div>
+        <div class="col-6 col-lg-3">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+              <div class="resumen-icono bg-warning-subtle text-warning-emphasis"><i class="bi bi-percent"></i></div>
+              <div>
+                <div class="dato-etiqueta">Total a pagar (con interés)</div>
+                <div class="h5 mb-0" id="totalAPagar">-</div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-body">
-              <div class="small text-muted">Saldo pendiente</div>
-              <div class="h4 mb-0 text-danger" id="saldoPendiente">-</div>
+        <div class="col-6 col-lg-3">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+              <div class="resumen-icono bg-success-subtle text-success"><i class="bi bi-check2-circle"></i></div>
+              <div>
+                <div class="dato-etiqueta">Total abonado</div>
+                <div class="h5 mb-0 text-success" id="totalAbonado">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body d-flex align-items-center gap-3">
+              <div class="resumen-icono bg-danger-subtle text-danger"><i class="bi bi-hourglass-split"></i></div>
+              <div>
+                <div class="dato-etiqueta">Saldo pendiente</div>
+                <div class="h5 mb-0 text-danger" id="saldoPendiente">-</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Tabla -->
-      <div class="card shadow-sm overflow-hidden">
+      <!-- Préstamos -->
+      <h2 class="h5 fw-semibold mb-3">Mis préstamos</h2>
+      <div class="row g-3 mb-4" id="listaPrestamos"></div>
+
+      <!-- Historial -->
+      <h2 class="h5 fw-semibold mb-3">Historial de pagos</h2>
+      <div class="card shadow-sm border-0 overflow-hidden">
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0">
             <thead class="table-dark">
@@ -71,6 +103,48 @@
       </div>
     </main>
 
-    <script src="../Controlador/MisPagos.js"></script>
+    <!-- Modal de abono -->
+    <div class="modal fade" id="modalAbono" tabindex="-1" aria-labelledby="tituloModalAbono" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form id="formAbono">
+            <div class="modal-header">
+              <h2 class="modal-title fs-5" id="tituloModalAbono">Abonar al préstamo</h2>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <div id="errorAbono" class="alert alert-danger d-none" role="alert"></div>
+
+              <div class="row text-center mb-3">
+                <div class="col-6">
+                  <div class="dato-etiqueta">Cuota mensual</div>
+                  <div class="dato-valor" id="modalCuota">-</div>
+                </div>
+                <div class="col-6">
+                  <div class="dato-etiqueta">Saldo pendiente</div>
+                  <div class="dato-valor text-danger" id="modalSaldo">-</div>
+                </div>
+              </div>
+
+              <label for="valorAbono" class="form-label">Valor del abono ($)</label>
+              <input type="number" class="form-control form-control-lg" id="valorAbono" min="1" step="0.01" required />
+              <div class="d-flex gap-2 mt-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="btnPagarCuota">Pagar cuota</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="btnPagarSaldo">Pagar saldo total</button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-success" id="btnConfirmarAbono">
+                <i class="bi bi-check-lg me-1"></i> Confirmar abono
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Controlador/MisPagos.js?v=4"></script>
   </body>
 </html>

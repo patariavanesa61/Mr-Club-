@@ -4,13 +4,301 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Préstamos - CLUB ACERIAS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/CSS/EstilosTarjetas.css">
     <style>
-        .badge { display: inline-block; padding: 4px 10px; border-radius: 12px; color: #fff; font-size: 0.85rem; font-weight: 600; }
-        .badge-activo { background: #1a73e8; }
-        .badge-pagado { background: #198754; }
-        .sin-datos { text-align: center; color: #6c757d; padding: 20px; }
+.tabla-prestamos th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 12px 14px;
+  border-bottom: 2px solid #e2e8f0;
+  text-align: left;
+}
+
+.tabla-prestamos td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.tabla-prestamos tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.num-col {
+  text-align: right !important;
+}
+
+.badge-estado {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge-activo {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+        .header-bar {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    color: #ffffff;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.12);
+}
+
+.header-bar h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e2e8f0;
+    white-space: nowrap;
+}
+
+.btn-cerrar-sesion {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.14);
+    color: #ffffff !important;
+    text-decoration: none !important;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    transition: background-color 0.15s ease;
+}
+
+.btn-cerrar-sesion:hover {
+    background-color: rgba(255, 255, 255, 0.24);
+}
+
+        :root {
+            --bg-app: #f1f5f9;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-subtle: #e2e8f0;
+            --accent: #1d4ed8;
+            --accent-hover: #1e40af;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 24px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-top: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 22px 26px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+        }
+
+        .card-panel h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-panel h2 i {
+            color: var(--accent);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group select {
+            height: 40px;
+            padding: 0 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            color: var(--text-main);
+            background-color: #fff;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+        }
+
+        .preview-box {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .preview-box strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-start;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.15s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 16px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .data-table thead th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 12px 14px;
+            border-bottom: 2px solid var(--border-subtle);
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .data-table thead th:nth-child(3),
+        .data-table thead th:nth-child(4),
+        .data-table thead th:nth-child(5),
+        .data-table tbody td:nth-child(3),
+        .data-table tbody td:nth-child(4),
+        .data-table tbody td:nth-child(5) {
+            text-align: right;
+        }
+
+        .data-table tbody td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #1e293b;
+            vertical-align: middle;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .badge-activo {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-pagado {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .sin-datos {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 24px 16px;
+            font-size: 0.92rem;
+        }
     </style>
 </head>
 <body>
@@ -18,7 +306,7 @@
     <header class="header-bar">
         <h1>CLUB ACERIAS - Gestión de Préstamos</h1>
         <div class="header-user">
-            <span>Admin MR</span>
+            <span>admin</span>
             <a href="PaginaPrincipal.html" class="btn-cerrar-sesion">
                 <i class="fa-solid fa-right-from-bracket"></i> Volver al Panel
             </a>
@@ -27,52 +315,109 @@
 
     <main class="container">
         <!-- Solicitar Préstamo -->
-        <div class="card-panel">
+        <section class="card-panel" aria-label="Registrar Préstamo">
             <h2><i class="fa-solid fa-hand-holding-dollar"></i> Registrar Préstamo</h2>
-            <form id="formPrestamo" class="form-grid" style="margin-top: 15px;">
+            <form id="formPrestamo" class="form-grid">
                 <div class="form-group">
                     <label for="selectAsociado">Asociado</label>
                     <select id="selectAsociado" required>
                         <option value="">Seleccione un asociado...</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="montoPrestamo">Monto Solicitado ($)</label>
-                    <input type="number" id="montoPrestamo" min="1" placeholder="Ej. 500000" required>
+                    <input type="number" id="montoPrestamo" min="1" step="1000" placeholder="Ej. 500000" required>
                 </div>
+
                 <div class="form-group">
                     <label for="plazoMeses">Plazo (Meses)</label>
                     <input type="number" id="plazoMeses" min="1" max="48" placeholder="Ej. 12" required>
                 </div>
+
                 <div class="form-group">
-                    <label for="tasaInteres">Tasa de Interés (%)</label>
+                    <label for="tasaInteres">Tasa de Interés Mensual (%)</label>
                     <input type="number" id="tasaInteres" step="0.01" min="0" value="1.5" required>
                 </div>
-                <div class="form-group" style="grid-column: 1 / -1;">
-                    <button type="submit" class="btn-primary" style="width: max-content;">Aprobar Préstamo</button>
+
+                <div class="preview-box" id="previewPrestamo">
+                    <span>Cuota estimada: <strong id="prevCuota">$ 0</strong></span>
+                    <span>Total estimado a pagar: <strong id="prevTotal">$ 0</strong></span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fa-solid fa-check"></i> Aprobar Préstamo
+                    </button>
                 </div>
             </form>
-        </div>
+        </section>
 
         <!-- Historial / Seguimiento de Pagos -->
-        <div class="card-panel">
+        <section class="card-panel" aria-label="Seguimiento de Préstamos">
             <h2><i class="fa-solid fa-file-invoice-dollar"></i> Seguimiento de Préstamos</h2>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Asociado</th>
-                        <th>Monto Original</th>
-                        <th>Saldo Pendiente</th>
-                        <th>Cuotas</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody id="listaPrestamos"></tbody>
-            </table>
-        </div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Asociado</th>
+                            <th>Monto Original</th>
+                            <th>Cuota Mensual</th>
+                            <th>Saldo Pendiente</th>
+                            <th>Cuotas</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaPrestamos"></tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
-    <script src="../Controlador/Prestamos.js"></script>
+    <script>
+        (function () {
+            const montoEl = document.getElementById('montoPrestamo');
+            const plazoEl = document.getElementById('plazoMeses');
+            const tasaEl = document.getElementById('tasaInteres');
+            const prevCuota = document.getElementById('prevCuota');
+            const prevTotal = document.getElementById('prevTotal');
+
+            const fmtCOP = (val) => new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                maximumFractionDigits: 0
+            }).format(val);
+
+            function actualizarVistaPrevia() {
+                const monto = parseFloat(montoEl.value) || 0;
+                const meses = parseInt(plazoEl.value, 10) || 0;
+                const tasa = (parseFloat(tasaEl.value) || 0) / 100;
+
+                if (monto <= 0 || meses <= 0) {
+                    prevCuota.textContent = '$ 0';
+                    prevTotal.textContent = '$ 0';
+                    return;
+                }
+
+                let cuota;
+                if (tasa === 0) {
+                    cuota = monto / meses;
+                } else {
+                    const factor = Math.pow(1 + tasa, meses);
+                    cuota = (monto * tasa * factor) / (factor - 1);
+                }
+
+                const total = cuota * meses;
+                prevCuota.textContent = fmtCOP(Math.round(cuota));
+                prevTotal.textContent = fmtCOP(Math.round(total));
+            }
+
+            [montoEl, plazoEl, tasaEl].forEach(el => {
+                el.addEventListener('input', actualizarVistaPrevia);
+            });
+        })();
+    </script>
+    <script src="../Controlador/Prestamos.js?v=3"></script>
 </body>
 </html>

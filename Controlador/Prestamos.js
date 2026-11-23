@@ -1,4 +1,4 @@
-// ===== IDs del HTML (ajústalos si los tuyos se llaman distinto) =====
+// ===== IDs del HTML =====
 const formPrestamo = document.getElementById("formPrestamo");
 const selectAsociado = document.getElementById("selectAsociado");
 const inputMonto = document.getElementById("montoPrestamo");
@@ -56,7 +56,7 @@ function crearCelda(texto, clase = "") {
 function crearBadgeEstado(pagado) {
     const celda = document.createElement("td");
     const badge = document.createElement("span");
-    badge.className = pagado ? "badge bg-success" : "badge bg-primary";
+    badge.className = pagado ? "badge badge-pagado" : "badge badge-activo";
     badge.textContent = pagado ? "Pagado" : "Activo";
     celda.append(badge);
     return celda;
@@ -68,8 +68,8 @@ function mostrarPrestamos(prestamos) {
     if (prestamos.length === 0) {
         const fila = document.createElement("tr");
         const celda = document.createElement("td");
-        celda.colSpan = 6;
-        celda.className = "text-center text-muted py-4";
+        celda.colSpan = 7;
+        celda.className = "sin-datos";
         celda.textContent = "No hay préstamos registrados.";
         fila.append(celda);
         listaPrestamos.append(fila);
@@ -77,14 +77,15 @@ function mostrarPrestamos(prestamos) {
     }
 
     prestamos.forEach((prestamo) => {
-        const saldo = Math.max(Number(prestamo.valorPrestamo) - Number(prestamo.totalPagado), 0);
-        const pagado = saldo === 0;
+        const saldo = Math.max(Number(prestamo.totalAPagar) - Number(prestamo.totalPagado), 0);
+        const pagado = saldo < 1;
 
         const fila = document.createElement("tr");
         fila.append(
             crearCelda(prestamo.idPrestamo),
             crearCelda(`${prestamo.nombres} ${prestamo.apellidos}`),
             crearCelda(formatoPesos(prestamo.valorPrestamo)),
+            crearCelda(formatoPesos(prestamo.cuotaMensual)),
             crearCelda(formatoPesos(saldo)),
             crearCelda(`${prestamo.cuotasPagadas}/${prestamo.numeroCuotas}`),
             crearBadgeEstado(pagado)
@@ -133,7 +134,7 @@ formPrestamo.addEventListener("submit", async (evento) => {
     const boton = formPrestamo.querySelector("button[type='submit']");
     boton.disabled = true;
 
-    try {
+       try {
         const resultado = await solicitarApi("../Modelo/gestionarPrestamos.php", "POST", datos);
         formPrestamo.reset();
         await cargarPrestamos();
