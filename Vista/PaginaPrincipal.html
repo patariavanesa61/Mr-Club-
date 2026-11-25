@@ -13,6 +13,7 @@
             color: white;
             padding: 20px 30px;
         }
+
         .modulo-card {
             border-top: 4px solid #0d6efd;
             border-radius: 10px;
@@ -20,17 +21,21 @@
             cursor: pointer;
             height: 100%;
         }
+
         .modulo-card.asociados {
             border-top: 4px solid #88f3a3;
         }
+
         .modulo-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(58, 4, 255, 0.795) !important;
         }
+
         .icono-principal {
             font-size: 45px;
             color: #1529daea;
         }
+
         /* Estilo para quitar el subrayado de los enlaces de las tarjetas */
         .card-link {
             text-decoration: none;
@@ -47,7 +52,7 @@
         <h3>CLUB ACERIAS - Panel Principal</h3>
         <div class="text-end">
             <small id="NombreUsuario"></small>
-            <button class="btn btn-danger btn-sm mt-1" onclick="CerrarSesión()"> 
+            <button class="btn btn-danger btn-sm mt-1" onclick="CerrarSesión()">
                 <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
             </button>
         </div>
@@ -58,7 +63,7 @@
 
         <!-- Tarjetas de Administrador -->
         <div id="TarjetasAdministrador" class="row g-4 mb-4">
-            
+
             <!-- Tarjeta Asociados -->
             <div class="col-md-3">
                 <a href="Asociados.html" class="card-link">
@@ -67,12 +72,13 @@
                         <h4 class="text-primary">Asociados</h4>
                         <strong>Gestión de Asociados</strong>
                         <p class="small text-muted mt-2">
-                            Administración de información de asociados, incluyendo registro, actualización y seguimiento de datos personales y de membresía.
+                            Administración de información de asociados, incluyendo registro, actualización y seguimiento
+                            de datos personales y de membresía.
                         </p>
                     </div>
                 </a>
             </div>
-        
+
             <!-- Tarjeta Prestamos -->
             <div class="col-md-3">
                 <a href="Préstamos.html" class="card-link">
@@ -81,7 +87,8 @@
                         <h4 class="text-primary">Prestamos</h4>
                         <strong>Gestión de Prestamos</strong>
                         <p class="small text-muted mt-2">
-                            Formulario para registrar y administrar los prestamos otorgados a los asociados, incluyendo detalles de los prestamos, plazos y seguimiento de pagos.
+                            Formulario para registrar y administrar los prestamos otorgados a los asociados, incluyendo
+                            detalles de los prestamos, plazos y seguimiento de pagos.
                         </p>
                     </div>
                 </a>
@@ -95,7 +102,8 @@
                         <h4 class="text-primary">Registro de Actividades</h4>
                         <strong>Registro de Actividades</strong>
                         <p class="small text-muted mt-2">
-                            Controlar y registrar las actividades realizadas por los asociados, incluyendo eventos, reuniones y participaciones en programas del club.
+                            Controlar y registrar las actividades realizadas por los asociados, incluyendo eventos,
+                            reuniones y participaciones en programas del club.
                         </p>
                     </div>
                 </a>
@@ -109,7 +117,8 @@
                         <h4 class="text-primary">Reportes</h4>
                         <strong>Consultas y Saldos</strong>
                         <p class="small text-muted mt-2">
-                            Ver reportes del club, incluyendo consultas de asociados, saldos de prestamos y estadísticas de participación en actividades.
+                            Ver reportes del club, incluyendo consultas de asociados, saldos de prestamos y estadísticas
+                            de participación en actividades.
                         </p>
                     </div>
                 </a>
@@ -118,15 +127,16 @@
 
         <!-- Tarjetas de Asociados (Se muestran u ocultan según el rol desde tu JS) -->
         <div id="TarjetasAsociados" class="row g-4 d-none">
-            
+
             <!-- Mi Perfil -->
             <div class="col-md-3">
-                <a href="Perfil.html" class="card-link">
+                <a href="MiPerfil.html" class="card-link">
                     <div class="card modulo-card asociados shadow-sm p-3">
                         <i class="bi bi-person-vcard icono-principal"></i>
                         <h4 class="text-success">Mi Perfil</h4>
                         <p class="small text-muted mt-2">
-                            Ver y actualizar mi información personal, incluyendo datos de contacto, preferencias y configuraciones de cuenta.
+                            Ver y actualizar mi información personal, incluyendo datos de contacto, preferencias y
+                            configuraciones de cuenta.
                         </p>
                     </div>
                 </a>
@@ -149,4 +159,5 @@
 
     <script src="../Controlador/PaginaPrincipal.js"></script>
 </body>
+
 </html>
